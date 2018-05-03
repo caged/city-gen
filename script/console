@@ -4,4 +4,4 @@ set -e
 
 appdir=$(cd $(dirname "$0")/.. && pwd)
 
-docker run -it --rm city-gen
+docker run -it -v "$appdir:/app" --rm city-gen

@@ -1,12 +1,14 @@
-FROM python:2.7.9
+FROM python:3.5.2
 
+RUN set -ex && pip install pipenv --upgrade
+
+ENV PYTHONPATH "/app/vendor/procedural_city_generation:$PYTHONPATH"
 
 WORKDIR /app
 
-RUN git clone https://github.com/josauder/procedural_city_generation.git
-
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Install Python requirements
+COPY Pipfile Pipfile
+COPY Pipfile.lock Pipfile.lock
+RUN set -ex && pipenv install --deploy --system --dev
 
 CMD ["bash"]
